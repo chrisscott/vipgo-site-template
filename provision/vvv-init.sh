@@ -81,6 +81,7 @@ noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${V
 echo "Including VIP config..."
 cat << EOF >> ${VVV_PATH_TO_SITE}/public_html/wp-config.php
 
+// Include VIP Config
 if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
     require_once( __DIR__ . '/wp-content/vip-config/vip-config.php' );
 }
