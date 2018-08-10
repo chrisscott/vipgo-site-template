@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 # Provision WordPress Stable for VIP
  
-VIP_REPO=`get_config_value 'vip-repo' ''`
-echo "VIP REPO {$VIP_REPO}"
+VIP_REPO=`get_config_value 'vip-repo'`
+echo "VIP_REPO: <$VIP_REPO>"
 if [ -z VIP_REPO ]; then
   echo "VIP: vip-repo must be set in vvv-custom.yml. See [url to readme] for details. Exiting..."
   exit 1
