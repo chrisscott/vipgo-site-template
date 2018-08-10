@@ -6,7 +6,7 @@ VIP_REPO=`get_config_value 'vip-repo'`
 # Check to make sure there's a VIP repo set in the config. We need this since 
 # it is the wp-content directory and we need to add mu-plugins after cloning it.
 if [ -z "$VIP_REPO" ]; then
-  echo "VIP: vip-repo must be set in vvv-custom.yml. See [url to readme] for details. Exiting VIP site init..." > /dev/stderr
+  echo "VIP: vip-repo must be set in vvv-custom.yml. See https://github.com/chrisscott/vip-go-vvv-site-template/blob/master/README.md for details. Exiting VIP site init..." > /dev/stderr
   exit 1
 fi
 
