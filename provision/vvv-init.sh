@@ -2,8 +2,9 @@
 # Provision WordPress Stable for VIP
  
 VIP_REPO=`get_config_value 'vip-repo' ''`
+echo "VIP REPO {$VIP_REPO}"
 if [ -z VIP_REPO ]; then
-  echo "vip-repo must be set in vvv-custom.yml. See [url to readme] for details. Exiting..."
+  echo "VIP: vip-repo must be set in vvv-custom.yml. See [url to readme] for details. Exiting..."
   exit 1
 fi
 
@@ -69,16 +70,16 @@ else
     sed -i "s#{{TLS_KEY}}##" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
 fi
 
-echo "Removing wp-content directory"
+echo "VIP: Removing wp-content directory"
 noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
 
-echo "Cloning VIP site repo..."
+echo "VIP: Cloning VIP site repo..."
 noroot git clone VIP_REPO ${VVV_PATH_TO_SITE}/public_html/wp-content
 
-echo "Installing VIP Go mu-plugins..."
+echo "VIP: nstalling VIP Go mu-plugins..."
 noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
 
-echo "Including VIP config..."
+echo "VIP: Including VIP config..."
 cat << EOF >> ${VVV_PATH_TO_SITE}/public_html/wp-config.php
 
 // Include VIP Config
@@ -87,11 +88,11 @@ if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
 }
 EOF
 
-echo "Adding user 'wp' with Administrator role and password 'wp'..."
+echo "VIP: Adding user 'wp' with Administrator role and password 'wp'..."
 noroot wp user create wp wp@local.test --user_pass=wp --role=administrator
 
-echo "Removing admin user which is prevented by VIP's security mu-plugin..."
+echo "VIP: Removing admin user which is prevented by VIP's security mu-plugin..."
 wp user delete admin
 
 # TODO: Prompt to do this now
-echo "IMPORTANT: To make sure networking is set up correctly, you need to reboot."
+echo "VIP: IMPORTANT, to make sure networking is set up correctly, you need to reboot."
