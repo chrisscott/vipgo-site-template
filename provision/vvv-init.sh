@@ -1,5 +1,11 @@
 #!/usr/bin/env bash
-# Provision WordPress Stable
+# Provision WordPress Stable for VIP
+ 
+VIP_REPO=`get_config_value 'vip-repo' ''`
+if [ -z VIP_REPO ]; then
+  echo "vip-repo must be set in vvv-custom.yml. See [url to readme] for details. Exiting..."
+  exit 1
+fi
 
 DOMAIN=`get_primary_host "${VVV_SITE_NAME}".test`
 DOMAINS=`get_hosts "${DOMAIN}"`
@@ -8,6 +14,7 @@ WP_VERSION=`get_config_value 'wp_version' 'latest'`
 WP_TYPE=`get_config_value 'wp_type' "single"`
 DB_NAME=`get_config_value 'db_name' "${VVV_SITE_NAME}"`
 DB_NAME=${DB_NAME//[\\\/\.\<\>\:\"\'\|\?\!\*-]/}
+
 
 # Make a database, if we don't already have one
 echo -e "\nCreating database '${DB_NAME}' (if it's not already there)"
