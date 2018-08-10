@@ -69,6 +69,12 @@ else
     sed -i "s#{{TLS_KEY}}##" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
 fi
 
+echo "Removing wp-content directory"
+noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
+
+echo "Cloning VIP site repo..."
+noroot git clone VIP_REPO ${VVV_PATH_TO_SITE}/public_html/wp-content
+
 echo "Installing VIP Go mu-plugins..."
 noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
 
