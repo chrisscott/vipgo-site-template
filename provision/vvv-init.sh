@@ -87,5 +87,11 @@ if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
 }
 EOF
 
+echo "Adding user 'wp' with Administrator role and password 'wp'..."
+noroot wp user create wp wp@local.test --user_pass=wp --role=administrator
+
+echo "Removing admin user which is prevented by VIP's security mu-plugin..."
+wp user delete admin
+
 # TODO: Prompt to do this now
 echo "To make sure networking is set up correctly, you need to reboot."
