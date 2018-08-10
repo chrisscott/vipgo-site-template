@@ -94,4 +94,4 @@ echo "Removing admin user which is prevented by VIP's security mu-plugin..."
 wp user delete admin
 
 # TODO: Prompt to do this now
-echo "To make sure networking is set up correctly, you need to reboot."
+echo "IMPORTANT: To make sure networking is set up correctly, you need to reboot."
