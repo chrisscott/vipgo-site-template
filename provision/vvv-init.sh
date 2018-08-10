@@ -97,6 +97,6 @@ echo "VIP: Removing admin user which is prevented by VIP's security mu-plugin...
 wp user delete admin
 
 # TODO: Prompt to do this now
-echo "VIP: IMPORTANT, to make sure networking is set up correctly, you need to reboot."
+echo "VIP: IMPORTANT, to make sure networking is set up correctly, you need to reboot." > /dev/stderr
 
 # noroot wp option update permalink_structure '/%postname%/'
