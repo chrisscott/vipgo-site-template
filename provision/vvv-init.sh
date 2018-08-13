@@ -75,6 +75,8 @@ if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
 }
 EOF
 
+  echo "VIP: Symlinking object-cache.php..."
+  noroot ln -s ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/drop-ins/object-cache/object-cache.php ${VVV_PATH_TO_SITE}/public_html/wp-content/object-cache.php
 
   # noroot wp option update permalink_structure '/%postname%/'
 else
