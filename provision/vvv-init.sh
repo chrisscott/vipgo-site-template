@@ -54,7 +54,8 @@ if ! $(noroot wp core is-installed); then
     INSTALL_COMMAND="install"
   fi
 
-  noroot wp core ${INSTALL_COMMAND} --url="${DOMAIN}" --quiet --title="${SITE_TITLE}" --admin_name=admin --admin_email="admin@local.test" --admin_password="password"
+  echo "VIP: Installing WordPress with Administrator user 'wp' with password 'wp'... "
+  noroot wp core ${INSTALL_COMMAND} --url="${DOMAIN}" --quiet --title="${SITE_TITLE}" --admin_name=wp --admin_email="wp@local.test" --admin_password="wp"
   
   echo "VIP: Removing wp-content directory"
   noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
@@ -74,11 +75,7 @@ if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
 }
 EOF
 
-  echo "VIP: Adding user 'wp' with Administrator role and password 'wp'..."
-  noroot wp user create wp wp@local.test --user_pass=wp --role=administrator
 
-  echo "VIP: Removing admin user which is prevented by VIP's security mu-plugin..."
-  noroot wp user delete admin
   # noroot wp option update permalink_structure '/%postname%/'
 else
   echo "Updating WordPress Stable..."
