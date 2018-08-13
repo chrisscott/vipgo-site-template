@@ -55,10 +55,37 @@ if ! $(noroot wp core is-installed); then
   fi
 
   noroot wp core ${INSTALL_COMMAND} --url="${DOMAIN}" --quiet --title="${SITE_TITLE}" --admin_name=admin --admin_email="admin@local.test" --admin_password="password"
+  
+  echo "VIP: Removing wp-content directory"
+  noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
+
+  echo "VIP: Cloning VIP site repo..."
+  noroot git clone VIP_REPO ${VVV_PATH_TO_SITE}/public_html/wp-content
+
+  echo "VIP: Installing VIP Go mu-plugins..."
+  noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
+
+	echo "VIP: Including VIP config..."
+	cat << EOF >> ${VVV_PATH_TO_SITE}/public_html/wp-config.php
+
+// Include VIP Config
+if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
+    require_once( __DIR__ . '/wp-content/vip-config/vip-config.php' );
+}
+EOF
+
+  echo "VIP: Adding user 'wp' with Administrator role and password 'wp'..."
+  noroot wp user create wp wp@local.test --user_pass=wp --role=administrator
+
+  echo "VIP: Removing admin user which is prevented by VIP's security mu-plugin..."
+  noroot wp user delete admin
+  # noroot wp option update permalink_structure '/%postname%/'
 else
   echo "Updating WordPress Stable..."
   cd ${VVV_PATH_TO_SITE}/public_html
   noroot wp core update --version="${WP_VERSION}"
+  
+  # TODO: Update vip go mu plugins repo with a git pull
 fi
 
 cp -f "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf.tmpl" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
@@ -72,31 +99,3 @@ else
     sed -i "s#{{TLS_KEY}}##" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
 fi
 
-echo "VIP: Removing wp-content directory"
-noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
-
-echo "VIP: Cloning VIP site repo..."
-noroot git clone VIP_REPO ${VVV_PATH_TO_SITE}/public_html/wp-content
-
-echo "VIP: Installing VIP Go mu-plugins..."
-noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
-
-echo "VIP: Including VIP config..."
-cat << EOF >> ${VVV_PATH_TO_SITE}/public_html/wp-config.php
-
-// Include VIP Config
-if ( file_exists( __DIR__ . '/wp-content/vip-config/vip-config.php' ) ) {
-    require_once( __DIR__ . '/wp-content/vip-config/vip-config.php' );
-}
-EOF
-
-echo "VIP: Adding user 'wp' with Administrator role and password 'wp'..."
-noroot wp user create wp wp@local.test --user_pass=wp --role=administrator
-
-echo "VIP: Removing admin user which is prevented by VIP's security mu-plugin..."
-wp user delete admin
-
-# TODO: Prompt to do this now
-echo "VIP: IMPORTANT, to make sure networking is set up correctly, you need to reboot." > /dev/stderr
-
-# noroot wp option update permalink_structure '/%postname%/'
