@@ -6,7 +6,8 @@ VIP_REPO=`get_config_value 'vip-repo'`
 # Check to make sure there's a VIP repo set in the config. We need this since 
 # it is the wp-content directory and we need to add mu-plugins after cloning it.
 if [ -z "$VIP_REPO" ]; then
-  echo "VIP: vip-repo must be set in vvv-custom.yml. See https://github.com/chrisscott/vip-go-vvv-site-template/blob/master/README.md for details. Exiting VIP site init..." > /dev/stderr
+  echo "VIP: vip-repo must be set in vvv-custom.yml. See https://github.com/chrisscott/vipgo-site-template/blob/master/README.md for details." > /dev/stderr
+  echo "Skipping provisioning for ${VVV_SITE_NAME}" > /dev/stderr
   exit 1
 fi
 
@@ -17,7 +18,6 @@ WP_VERSION=`get_config_value 'wp_version' 'latest'`
 WP_TYPE=`get_config_value 'wp_type' "single"`
 DB_NAME=`get_config_value 'db_name' "${VVV_SITE_NAME}"`
 DB_NAME=${DB_NAME//[\\\/\.\<\>\:\"\'\|\?\!\*-]/}
-
 
 # Make a database, if we don't already have one
 echo -e "\nCreating database '${DB_NAME}' (if it's not already there)"
