@@ -84,7 +84,10 @@ else
   cd ${VVV_PATH_TO_SITE}/public_html
   noroot wp core update --version="${WP_VERSION}"
   
-  # TODO: Update vip go mu plugins repo with a git pull
+  echo "VIP: Updating VIP Go mu-plugins..."
+  cd ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
+  noroot git pull origin master
+  noroot git submodule update --init --recursive
 fi
 
 cp -f "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf.tmpl" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
