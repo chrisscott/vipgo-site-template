@@ -88,6 +88,7 @@ else
   cd ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
   noroot git pull origin master
   noroot git submodule update --init --recursive
+  cd ${VVV_PATH_TO_SITE}/public_html
 fi
 
 cp -f "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf.tmpl" "${VVV_PATH_TO_SITE}/provision/vvv-nginx.conf"
