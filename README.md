@@ -22,15 +22,13 @@ This site template is used to set up a local VIP Go dev environment using VVV. I
     ```
 
     * `repo` will use this repo to configure your site.
-    * `custom.vip-repo` is the GitHub git URL to the repo provided by VIP for the site you are configuring.
+    * `vip-repo` is the GitHub git URL to the repo provided by VIP for the site you are configuring.
     * The site will live in `www/vipsite`
 
-    Here's what a full `sites` section would might like if the git repo was named `vipsite` and we want to use that as the hostname as well:
+    For example, here's what a full `sites` section would might like if the git repo was named `vipsite` and you want to use that as the hostname as well:
 
-    ```
+    ```yaml
     sites:
-      # The wordpress-default configuration provides an installation of the
-      # latest version of WordPress.
       vipsite:
         repo: git@github.com:chrisscott/vip-go-vvv-site-template.git
         hosts:
@@ -39,5 +37,11 @@ This site template is used to set up a local VIP Go dev environment using VVV. I
           vip-repo: git@github.com:wpcomvip/vipsite.git
     ```
 3. Run `vagrant up --provision`. Keep an eye out for any console messages prepended with `VIP:`. 
-4. **IMPORTANT**: Reboot your computer to make sure networking changes take effect.
-5. Use VVV as normal and enjoy!
+
+## IMPORTANT
+
+* If this is your first provision after installing VVV, reboot your computer to make sure networking changes take effect.
+* Due to username restrictions on VIP Go, the default WordPress credentials are not used. Instead, the following WordPress credentials must be used after provisioning:
+  * Username: `wp`
+  * Password: `wp`
+* Running `vagrant up --provision` is required after any change to `vvv-custom.yml`. This is non-destructive and will also update the VIP Go mu-plugins.
