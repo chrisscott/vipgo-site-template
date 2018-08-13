@@ -14,7 +14,7 @@ This site template is used to set up a local VIP Go dev environment using VVV. I
     In the `sites` section, add a site using this repository, and specifying your VIP Go site repo, e.g.:
     ```yaml
     vipsite:
-      repo: git@github.com:chrisscott/vip-go-vvv-site-template.git
+      repo: git@github.com:chrisscott/vipgo-site-template.git
       hosts:
         - vipsite.test
       custom:
@@ -30,7 +30,7 @@ This site template is used to set up a local VIP Go dev environment using VVV. I
     ```yaml
     sites:
       vipsite:
-        repo: git@github.com:chrisscott/vip-go-vvv-site-template.git
+        repo: git@github.com:chrisscott/vipgo-site-template.git
         hosts:
           - vipsite.test
         custom:
