@@ -61,7 +61,7 @@ if ! $(noroot wp core is-installed); then
   noroot rm -rf ${VVV_PATH_TO_SITE}/public_html/wp-content/
 
   echo "VIP: Cloning VIP site repo..."
-  noroot git clone VIP_REPO ${VVV_PATH_TO_SITE}/public_html/wp-content
+  noroot git clone ${VIP_REPO} ${VVV_PATH_TO_SITE}/public_html/wp-content
 
   echo "VIP: Installing VIP Go mu-plugins..."
   noroot git clone git@github.com:Automattic/vip-go-mu-plugins.git --recursive ${VVV_PATH_TO_SITE}/public_html/wp-content/mu-plugins/
